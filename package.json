@@ -7,7 +7,15 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint ./",
-    "lint:fix": "eslint ./ --fix"
+    "lint:fix": "eslint ./ --fix",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint",
+      "prettier --write"
+    ],
+    "**/*": "prettier --write --ignore-unknown"
   },
   "dependencies": {
     "vue": "^3.2.47"
@@ -22,6 +30,8 @@
     "eslint-plugin-n": "^15.7.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-vue": "^9.10.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.0",
     "prettier": "2.8.7",
     "typescript": "^5.0.3",
     "vite": "^4.1.4"
