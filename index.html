@@ -15,28 +15,16 @@
       const vm = Vue.createApp({
         data() {
           return {
-            text: "<p>Hola Vue</p>",
+            attr_alt: "alt",
+            alt: "Preuba para el alt de una imagen",
+            img: "https://images.pexels.com/photos/15891938/pexels-photo-15891938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+            // https://images.pexels.com/photos/10244675/pexels-photo-10244675.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load
           };
         },
-        template: '<div v-once v-text="text"></div>',
+        template: '<img v-bind:src="img" v-bind:["attr_alt"]="alt">',
       }).mount("#app");
 
       console.log(vm);
-    </script>
-
-    <div id="app2"></div>
-    <!--script type="module" src="/src/main.js"></script-->
-    <script>
-      const vm2 = Vue.createApp({
-        data() {
-          return {
-            text: "<p>Hola Vue</p>",
-          };
-        },
-        template: '<div v-html="text"></div>',
-      }).mount("#app2");
-
-      console.log(vm2);
     </script>
   </body>
 </html>
