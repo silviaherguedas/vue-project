@@ -7,7 +7,7 @@ module.exports = {
   extends: [
     "plugin:vue/vue3-essential",
     "standard-with-typescript",
-    "prettier"
+    "prettier",
   ],
   overrides: [],
   parserOptions: {
