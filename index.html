@@ -9,18 +9,34 @@
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
-    <div id="app">{{ text }}</div>
+    <div id="app"></div>
     <!--script type="module" src="/src/main.js"></script-->
     <script>
       const vm = Vue.createApp({
         data() {
           return {
-            text: "Hola Vue",
+            text: "<p>Hola Vue</p>",
           };
         },
+        template: '<div v-once v-text="text"></div>',
       }).mount("#app");
 
       console.log(vm);
+    </script>
+
+    <div id="app2"></div>
+    <!--script type="module" src="/src/main.js"></script-->
+    <script>
+      const vm2 = Vue.createApp({
+        data() {
+          return {
+            text: "<p>Hola Vue</p>",
+          };
+        },
+        template: '<div v-html="text"></div>',
+      }).mount("#app2");
+
+      console.log(vm2);
     </script>
   </body>
 </html>
