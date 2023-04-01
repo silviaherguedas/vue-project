@@ -15,13 +15,19 @@
       const vm = Vue.createApp({
         data() {
           return {
-            attr_alt: "alt",
-            alt: "Preuba para el alt de una imagen",
-            img: "https://images.pexels.com/photos/15891938/pexels-photo-15891938.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-            // https://images.pexels.com/photos/10244675/pexels-photo-10244675.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load
+            counter: 0,
           };
         },
-        template: '<img v-bind:src="img" v-bind:["attr_alt"]="alt">',
+        methods: {
+          increment() {
+            this.counter++;
+          },
+          decrement() {
+            this.counter === 0 ? (this.counter = 0) : this.counter--;
+          },
+        },
+        template:
+          '<form><p><button v-on:click.prevent="increment">+</button> {{ counter }} <button v-on:click.prevent="decrement">-</button></p></form>',
       }).mount("#app");
 
       console.log(vm);
