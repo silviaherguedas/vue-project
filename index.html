@@ -6,7 +6,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Inputs reactivos</title>
+    <title>Propiedades computadas</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -22,19 +22,31 @@
             now: new Date(),
           };
         },
+        created() {
+          var self = this;
+          window.setInterval(() => self.updateDateTime(), 1000);
+        },
+        methods: {
+          updateDateTime() {
+            this.now = new Date();
+          },
+        },
         computed: {
           fullName() {
             return this.firstName + " " + this.lastName;
           },
           today() {
-            return this.now.toLocaleDateString();
+            return this.now.toLocaleString();
           },
         },
         template: `
-            <div>{{ fullName }}</div>
-            <div>{{ today }}</div>
-            `,
+                <div> {{ fullName }} </div>
+                <input v-model="firstName" />
+                <input v-model="lastName" />
+                <div>{{ today }}</div>
+                `,
       }).mount("#app");
+      console.log(vm);
 
       console.log(vm);
     </script>
