@@ -1,30 +1,58 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="/favicon.ico" />
+    <meta name="Description" content="Extended Description" />
+    <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite App</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Inputs reactivos</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <div id="app"></div>
-    <!--script type="module" src="/src/main.js"></script-->
+
     <script>
       const vm = Vue.createApp({
         data() {
           return {
-            text: "Hola!!",
+            text: "Hola Vue 1",
+            text2: "Hola Vue 2",
+            text3: "Hola Vue 3",
           };
         },
         methods: {
-          inputt(e) {
+          input(e) {
+            // Indirectamente modifico el valor de p en el html
             this.text = e.target.value;
           },
+          input2(e) {
+            // Indirectamente modifico el valor de p en el html
+            this.text2 = e.target.value;
+          },
         },
-        template:
-          '<form><p>{{ text }}</p><input type="text" v-on:input="inputt" v-bind:value="text" /></form>',
+        // v-on:change detecta el evento al cambiar el texto
+        // v-on:input detecta el evento al al cambiar el texto en tiempo real
+        // Se puede resumir:
+        // v-on:event="funct"       --> @event="funct"
+        // v-bind:attr="var-value"  --> :attr="var-value"
+        // v-model="var-react" nos da reactividad entre componentes
+        template: `
+                <p>{{ text }}</p>
+                <input type="text" v-on:change="input">
+                <p>{{ text2 }}</p>
+                <input
+                    type="text"
+                    @input="input2"
+                    :value="text2"
+                >
+                <p>{{ text3 }}</p>
+                <input
+                    type="text"
+                    v-model="text3"
+                >
+            `,
       }).mount("#app");
 
       console.log(vm);
