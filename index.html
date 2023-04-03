@@ -21,7 +21,7 @@
               title: "",
               description: "",
             },
-            editPost: false,
+            add: false,
             openDoor: false,
             posts: [
               { title: "Post 1", description: "Description 1" },
@@ -75,7 +75,7 @@
             } else {
               this.text = "Inicia sesión";
               this.userName = "";
-              this.editPost = false;
+              this.add = false;
             }
           },
         },
@@ -84,17 +84,17 @@
                   <h2>{{ text }}</h2>
                   <div v-if="openDoor">
                     <div class="menuLogin">
-                      <a href="#" @click="editPost = true">editar</a>
-                      <a href="#" @click="editPost = false">ver</a>
+                      <a href="#" @click="add = true">nuevo</a>
+                      <a href="#" @click="add = false">ver</a>
                     </div>
                     <p>Hola, {{ userName }}</p>
-                    <div id="divEdit" class="containerEdit" v-if="editPost">
+                    <div id="divAdd" class="containerAdd" v-if="add">
                       <div id="divAddPost" class="addPost">
                         <div> T&iacute;tulo </div>
                         <input type="text" v-model="addPost.title" />
                         <div> Descripci&oacute;n </div>
                         <input type="text" v-model="addPost.description" />
-                        <div><button class="btnAdd" @click="AddPostToTheList">Agregar</button></div>
+                        <div><button @click="AddPostToTheList">Agregar</button></div>
                       </div>
                       <div id="divDeletePost" class="delPost">
                         <div class="itemDel" v-for="(post, i) in posts" key="i">
@@ -110,7 +110,7 @@
                       </div>
                     </div>
                   </div>
-                  <div v-else="openDoor">
+                  <div v-else>
                     <div>User name </div>
                     <input type="text" v-model="userName">
                   </div>
@@ -169,7 +169,7 @@
         background-color: #eca1a6;
       }
 
-      .containerEdit {
+      .containerAdd {
         display: flex;
         flex-direction: row;
         gap: 16px;
