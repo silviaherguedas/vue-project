@@ -6,7 +6,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Estilos reactivos</title>
+    <title>Condicionales</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -17,39 +17,43 @@
       const vm = Vue.createApp({
         data() {
           return {
-            estado: "Puerta Cerrada",
+            text: "Accede a tu cuenta",
             open: false,
-            // styles: {
-            //   color: 'red',
-            //   fontSize: '30px'
-            // }
+            username: "",
           };
         },
         computed: {
-          puerta() {
-            return this.open ? "Cerrar" : "Abrir";
-          },
           styles() {
             return this.open ? ["open"] : ["closed"];
           },
         },
         watch: {
-          open(now_value, old_value) {
-            // old_value es el valor anterior que tenía la variable que se está escuchando
-            this.estado = now_value ? "Puerta Abierta" : "Puerta Cerrada";
+          open(value) {
+            if (value) {
+              this.text = "Cierra sesión";
+            } else {
+              this.text = "Accede a tu cuenta";
+              this.username = "";
+            }
           },
         },
-        //<div :style="styles"></div>
-        //<div class="container" :class="{ 'open': open, 'closed': !open }">
         template: `
-            <div class="container" :class="styles">
-                <h2>{{ estado }}</h2>
-                <button @click="open = !open">{{ puerta }}</button>
-            </div>
-            `,
+                <div class="container" :class="styles">
+                    <h2>{{ text }}</h2>
+                    <div v-if="open">
+                        <p>Hola, {{ username }}</p>
+                    </div>
+                    <div v-else>
+                        <div>Username</div>
+                        <input type="text" v-model="username" />
+                    </div>
+                    <button @click="open = !open">
+                        <div v-if="!open">Acceder</div>
+                        <div v-else>Salir</div>
+                    </button>
+                </div>
+                `,
       }).mount("#app");
-
-      console.log(vm);
     </script>
 
     <style>
