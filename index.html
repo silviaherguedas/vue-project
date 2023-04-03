@@ -17,77 +17,144 @@
       const app = Vue.createApp({
         data() {
           return {
-            text: "Accede a tu cuenta",
-            open: false,
-            username: "",
+            addPost: {
+              title: "",
+              description: "",
+            },
+            add: false,
+            openDoor: false,
             posts: [
               {
-                title: "Titulo 1",
-                description: "Lorem ipsum...",
+                title: "Post 1",
+                description:
+                  "Lorem ipsum dolor sit amet consectetur adipiscing elit vivamus, fringilla mattis aliquet orci volutpat nisl luctus tincidunt sociis, suscipit curabitur nullam egestas turpis penatibus cursus. Convallis fusce inceptos suscipit congue ligula elementum lacus quis, vitae taciti platea habitasse feugiat sapien accumsan, imperdiet blandit commodo luctus ut pharetra ultrices. Imperdiet mollis metus proin sodales dictum libero hendrerit porta porttitor, turpis risus quis non iaculis ullamcorper rutrum curae neque, posuere dignissim lacus auctor pellentesque vitae in litora.",
               },
               {
-                title: "Titulo 2",
-                description: "Lorem ipsum...",
+                title: "Post 2",
+                description:
+                  "Lorem ipsum dolor sit amet consectetur adipiscing elit vivamus, fringilla mattis aliquet orci volutpat nisl luctus tincidunt sociis, suscipit curabitur nullam egestas turpis penatibus cursus. Convallis fusce inceptos suscipit congue ligula elementum lacus quis, vitae taciti platea habitasse feugiat sapien accumsan, imperdiet blandit commodo luctus ut pharetra ultrices. Imperdiet mollis metus proin sodales dictum libero hendrerit porta porttitor, turpis risus quis non iaculis ullamcorper rutrum curae neque, posuere dignissim lacus auctor pellentesque vitae in litora.",
               },
               {
-                title: "Titulo 3",
-                description: "Lorem ipsum...",
+                title: "Post 3",
+                description:
+                  "Lorem ipsum dolor sit amet consectetur adipiscing elit vivamus, fringilla mattis aliquet orci volutpat nisl luctus tincidunt sociis, suscipit curabitur nullam egestas turpis penatibus cursus. Convallis fusce inceptos suscipit congue ligula elementum lacus quis, vitae taciti platea habitasse feugiat sapien accumsan, imperdiet blandit commodo luctus ut pharetra ultrices. Imperdiet mollis metus proin sodales dictum libero hendrerit porta porttitor, turpis risus quis non iaculis ullamcorper rutrum curae neque, posuere dignissim lacus auctor pellentesque vitae in litora.",
               },
               {
-                title: "Titulo 4",
-                description: "Lorem ipsum...",
+                title: "Post 4",
+                description:
+                  "Lorem ipsum dolor sit amet consectetur adipiscing elit vivamus, fringilla mattis aliquet orci volutpat nisl luctus tincidunt sociis, suscipit curabitur nullam egestas turpis penatibus cursus. Convallis fusce inceptos suscipit congue ligula elementum lacus quis, vitae taciti platea habitasse feugiat sapien accumsan, imperdiet blandit commodo luctus ut pharetra ultrices. Imperdiet mollis metus proin sodales dictum libero hendrerit porta porttitor, turpis risus quis non iaculis ullamcorper rutrum curae neque, posuere dignissim lacus auctor pellentesque vitae in litora.",
               },
             ],
+            text: "Inicia sesión",
+            userName: "",
           };
         },
+        computed: {
+          styleComputed2() {
+            return this.openDoor ? "open" : "closed";
+          },
+        },
         watch: {
-          open(value) {
+          openDoor(value, oldValue) {
             if (value) {
               this.text = "Cierra sesión";
             } else {
-              this.text = "Accede a tu cuenta";
-              this.username = "";
+              this.text = "Inicia sesión";
+              this.userName = "";
+              this.add = false;
             }
           },
         },
-        computed: {
-          styles() {
-            return this.open ? ["open"] : ["closed"];
+        template: `
+            <div class="container" :class="styleComputed2">
+              <h2>{{ text }}</h2>
+              <div v-if="openDoor">
+                <p>Hola, {{ userName }}</p>
+                <div class="menuLogin">
+                  <button @click="add = true">nuevo</button>
+                  <button @click="add = false">ver</button>
+                </div>
+                <div class="containerAdd" v-if="add">
+                  <add
+                    :addPost="addPost"
+                    :posts="posts"
+                  />
+                  <div id="divDeletePost">
+                    <item
+                      class="itemDel"
+                      v-for="(item, i) in posts"
+                      :key="i"
+                      :post="item"
+                      :posts="posts"
+                      :withDescription="false"
+                    />
+                  </div>
+                </div>
+                <div v-else class="list">
+                  <item
+                    v-for="(item, i) in posts"
+                    :key="i"
+                    :post="item"
+                    :posts="posts"
+                    :withDescription="true"
+                  />
+                </div>
+              </div>
+              <div v-else>
+                <div>User name </div>
+                <input type="text" v-model="userName">
+              </div>
+              <button class="mgt-24" @click="openDoor = !openDoor">
+                <div v-if="!openDoor">Acceder</div>
+                <div v-else>Salir</div>
+              </button>
+            </div>
+            `,
+      });
+
+      app.component("add", {
+        props: ["posts", "addPost"],
+        methods: {
+          AddPostToTheList() {
+            this.posts.push({
+              title: this.addPost.title,
+              description: this.addPost.description,
+            });
           },
         },
         template: `
-                <div class="container" :class="styles">
-                    <h2>{{ text }}</h2>
-                    <div v-if="open">
-                        <p>Hola, {{ username }}</p>
-                        <div class="list">
-                            <item
-                                v-for="(item, i) in posts"
-                                :key="i"
-                                :post="item"
-                            />
-                        </div>
-                    </div>
-                    <div v-else>
-                        <div>Username</div>
-                        <input type="text" v-model="username" />
-                    </div>
-                    <button @click="open = !open">
-                        <div v-if="!open">Acceder</div>
-                        <div v-else>Salir</div>
-                    </button>
-                </div>
-                `,
+              <div class="addPost">
+                <div> T&iacute;tulo </div>
+                <input type="text" v-model="addPost.title" />
+                <div> Descripci&oacute;n </div>
+                <input type="text" v-model="addPost.description" />
+                <div class="mgt-24"><button @click="AddPostToTheList">Agregar</button></div>
+              </div>
+            `,
       });
 
       app.component("item", {
-        props: ["post"],
+        props: ["post", "key", "posts", "withDescription"],
+        methods: {
+          DeletePost(index, element) {
+            // mutabilidad aqui seria para no mutar directamente el array
+            // let aTemp = this.posts.map(function(item, index){
+            //     return item;
+            // });
+            // aTemp.splice(index, 1);
+            // this.posts = aTemp;
+
+            this.posts.splice(index, 1);
+            // console.log(index, element, this.posts, aTemp);
+          },
+        },
         template: `
-                <div class="item">
-                    <div class="title">{{ post.title }}</div>
-                    <p>{{ post.description }}</p>
-                </div>
-                `,
+            <div class="item">
+                <div class="title">{{ post.title }}</div>
+                <p v-if="withDescription">{{ post.description }}</p>
+                <div><button @click="DeletePost(key, post)">borrar</button></div>
+            </div>
+            `,
       });
 
       const vm = app.mount("#app");
@@ -108,19 +175,34 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
-        height: 100%;
+      }
+
+      .mgt-24 {
+        margin-top: 24px;
       }
 
       button {
-        margin-top: 24px;
         border: none;
         background-color: white;
         padding: 8px 24px;
         border-radius: 12px;
       }
 
+      .addPost {
+        background-color: #54964a;
+        border: 1px solid #ccc;
+        padding: 7px;
+      }
+
       .closed {
         background-color: #eca1a6;
+      }
+
+      .containerAdd {
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        width: 100%;
       }
 
       .open {
@@ -133,12 +215,28 @@
       }
 
       .item {
-        border: 1px solid black;
+        border: 1px solid #1c2263;
+        padding: 7px;
+        margin-bottom: 7px;
+      }
+
+      .itemDel {
+        border-bottom: 1px solid #1c2263;
+        font-size: 14px;
+        margin-bottom: 7px;
+      }
+
+      .menuLogin {
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+        gap: 7px;
+        margin-bottom: 7px;
       }
 
       .title {
         font-weight: bold;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
       }
     </style>
   </body>
