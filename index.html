@@ -85,6 +85,7 @@
                       v-for="(item, i) in posts"
                       :key="i"
                       :post="item"
+                      :index="i"
                       :posts="posts"
                       :withDescription="false"
                     />
@@ -95,6 +96,7 @@
                     v-for="(item, i) in posts"
                     :key="i"
                     :post="item"
+                    :index="i"
                     :posts="posts"
                     :withDescription="true"
                   />
@@ -134,7 +136,7 @@
       });
 
       app.component("item", {
-        props: ["post", "key", "posts", "withDescription"],
+        props: ["post", "index", "posts", "withDescription"],
         methods: {
           DeletePost(index, element) {
             // mutabilidad aqui seria para no mutar directamente el array
@@ -152,7 +154,7 @@
             <div class="item">
                 <div class="title">{{ post.title }}</div>
                 <p v-if="withDescription">{{ post.description }}</p>
-                <div><button @click="DeletePost(key, post)">borrar</button></div>
+                <div><button @click="DeletePost(index, post)">borrar</button></div>
             </div>
             `,
       });
@@ -175,6 +177,7 @@
         align-items: center;
         flex-direction: column;
         width: 100%;
+        height: 100%;
       }
 
       .mgt-24 {
