@@ -6,7 +6,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Propiedades computadas</title>
+    <title>Watchers</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -17,36 +17,26 @@
       const vm = Vue.createApp({
         data() {
           return {
-            firstName: "Diana",
-            lastName: "Martinez",
-            now: new Date(),
+            estado: "Puerta Cerrada",
+            open: false,
           };
         },
-        created() {
-          var self = this;
-          window.setInterval(() => self.updateDateTime(), 1000);
-        },
-        methods: {
-          updateDateTime() {
-            this.now = new Date();
-          },
-        },
         computed: {
-          fullName() {
-            return this.firstName + " " + this.lastName;
+          puerta() {
+            return this.open ? "Cerrar" : "Abrir";
           },
-          today() {
-            return this.now.toLocaleString();
+        },
+        watch: {
+          open(now, old) {
+            // old es el valor anterior que tenía la variable que se está escuchando
+            this.estado = now ? "Puerta Abierta" : "Puerta Cerrada";
           },
         },
         template: `
-                <div> {{ fullName }} </div>
-                <input v-model="firstName" />
-                <input v-model="lastName" />
-                <div>{{ today }}</div>
-                `,
+            <p> {{estado}} </p>
+            <button @click="open = !open">{{ puerta }}</button>
+            `,
       }).mount("#app");
-      console.log(vm);
 
       console.log(vm);
     </script>
