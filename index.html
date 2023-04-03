@@ -6,7 +6,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Watchers</title>
+    <title>Estilos reactivos</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -19,6 +19,10 @@
           return {
             estado: "Puerta Cerrada",
             open: false,
+            // styles: {
+            //   color: 'red',
+            //   fontSize: '30px'
+            // }
           };
         },
         computed: {
@@ -35,6 +39,7 @@
             this.estado = now_value ? "Puerta Abierta" : "Puerta Cerrada";
           },
         },
+        //<div :style="styles"></div>
         //<div class="container" :class="{ 'open': open, 'closed': !open }">
         template: `
             <div class="container" :class="styles">
