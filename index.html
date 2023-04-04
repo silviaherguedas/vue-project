@@ -6,9 +6,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>
-      Eventos en componentes: Comunicación de componente hijo a padre
-    </title>
+    <title>Custom v-model</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -19,38 +17,70 @@
       const app = Vue.createApp({
         data() {
           return {
-            items: ["uno", "dos", "tres"],
+            text: "EJEMPLO SIN v-model",
           };
         },
         methods: {
-          remove(i) {
-            this.items = this.items.filter((el, index) => index !== i);
+          cambiar_texto_padre(e) {
+            console.log("padre", e);
+            this.text = e;
           },
         },
         template: `
-            <ul>
-                <v-item
-                    v-for="(item, i) in items"
-                    v-bind:text="item"
-                    v-on:event_remove="remove(i)"
-                />
-            </ul>
+            <div>
+                <h2>{{ text }}</h2>
+                <v-input v-bind:valor_input="text" v-on:evento_padre="cambiar_texto_padre" />
+            </div>
         `,
       });
 
-      app.component("v-item", {
+      app.component("v-input", {
         props: {
-          text: String,
+          valor_input: String,
         },
         methods: {
-          rm() {
-            this.$emit("event_remove");
+          cambiar_input_hijo(e) {
+            console.log("hijo", e.target.value);
+            this.$emit("evento_padre", e.target.value);
           },
         },
-        template: `<li v-on:click="rm">{{ text }}</li>`,
+        template: `<input type="text" v-bind:value="valor_input" v-on:input="cambiar_input_hijo" />`,
       });
 
       const vm = app.mount("#app");
+    </script>
+
+    <div id="app2"></div>
+
+    <script>
+      const app2 = Vue.createApp({
+        data() {
+          return {
+            text: "EJEMPLO CON v-model",
+          };
+        },
+        template: `
+            <div>
+                <h2>{{ text }}</h2>
+                <v-input v-model:valor_input="text" />
+            </div>
+        `,
+      });
+
+      app2.component("v-input", {
+        props: {
+          valor_input: String,
+        },
+        methods: {
+          cambiar_input_hijo(e) {
+            console.log("hijo", e.target.value);
+            this.$emit("update:valor_input", e.target.value);
+          },
+        },
+        template: `<input type="text" v-bind:value="valor_input" v-on:input="cambiar_input_hijo" />`,
+      });
+
+      const vm2 = app2.mount("#app2");
     </script>
   </body>
 </html>
