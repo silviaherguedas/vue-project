@@ -6,7 +6,9 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Props en componentes</title>
+    <title>
+      Eventos en componentes: Comunicación de componente hijo a padre
+    </title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -17,25 +19,35 @@
       const app = Vue.createApp({
         data() {
           return {
-            items: ["uno", "dos", "tres", ,],
+            items: ["uno", "dos", "tres"],
           };
+        },
+        methods: {
+          remove(i) {
+            this.items = this.items.filter((el, index) => index !== i);
+          },
         },
         template: `
             <ul>
-                <v-item v-for="item in items" v-bind:text="item"></v-item>
+                <v-item
+                    v-for="(item, i) in items"
+                    v-bind:text="item"
+                    v-on:event_remove="remove(i)"
+                />
             </ul>
-                `,
+        `,
       });
 
       app.component("v-item", {
         props: {
-          // text: String, // otra forma de definirla
-          text: {
-            type: String,
-            default: "Texto vacío",
+          text: String,
+        },
+        methods: {
+          rm() {
+            this.$emit("event_remove");
           },
         },
-        template: `<li>{{ text }}</li>`,
+        template: `<li v-on:click="rm">{{ text }}</li>`,
       });
 
       const vm = app.mount("#app");
