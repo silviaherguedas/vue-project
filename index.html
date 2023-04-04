@@ -6,7 +6,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Comunicación con componentes profundos</title>
+    <title>Instancias de componentes</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -17,69 +17,24 @@
       const app = Vue.createApp({
         data() {
           return {
-            text: "Texto emitido hacia el nieto",
+            text: "Hola Vue",
           };
         },
-        provide() {
-          return {
-            texto_enviado_a_nieto: this.text,
-          };
-        },
-        template: `
-            <h1>Comunicación con componentes profundos</h1>
-            <div class="padre">
-              <h2>Componente padre</h2>
-              <p>{{ text }}</p>
-              <componente-hijo />
-            </div>
-        `,
+        template: `<v-button ref="elemento" :label="text"></v-button>`,
       });
 
-      app.component("componente-hijo", {
-        template: `
-            <div class="hijo">
-              <h2>Componente hijo</h2>
-              <componente-nieto />
-            </div>
-        `,
-      });
-
-      app.component("componente-nieto", {
-        // inject: ["texto_enviado_a_nieto"],
-        inject: {
-          text_nieto: {
-            from: "texto_enviado_a_nieto",
-          },
-        },
-        template: `
-            <div class="nieto">
-              <h2>Componente nieto</h2>
-              <p>{{ text_nieto }}</p>
-            </div>
-        `,
+      app.component("v-button", {
+        props: ["label"],
+        template: `<button>{{ label }}</button>`,
       });
 
       const vm = app.mount("#app");
+
+      console.log("root:", vm.$root);
+      console.log("el: ", vm.$el);
+      console.log("refs: ", vm.$refs);
+      console.log("refs.elemento: ", vm.$refs.elemento);
+      console.log("props: ", vm.$props);
     </script>
-
-    <style>
-      .padre {
-        border: 1px solid black;
-        padding: 20px;
-        background-color: aqua;
-      }
-
-      .hijo {
-        border: 1px solid black;
-        padding: 20px;
-        background-color: rgb(96, 96, 207);
-      }
-
-      .nieto {
-        border: 1px solid black;
-        padding: 20px;
-        background-color: aquamarine;
-      }
-    </style>
   </body>
 </html>
