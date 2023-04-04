@@ -6,7 +6,7 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Custom v-model</title>
+    <title>Comunicación con componentes profundos</title>
   </head>
   <body>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -17,70 +17,69 @@
       const app = Vue.createApp({
         data() {
           return {
-            text: "EJEMPLO SIN v-model",
+            text: "Texto emitido hacia el nieto",
           };
         },
-        methods: {
-          cambiar_texto_padre(e) {
-            console.log("padre", e);
-            this.text = e;
-          },
+        provide() {
+          return {
+            texto_enviado_a_nieto: this.text,
+          };
         },
         template: `
-            <div>
-                <h2>{{ text }}</h2>
-                <v-input v-bind:valor_input="text" v-on:evento_padre="cambiar_texto_padre" />
+            <h1>Comunicación con componentes profundos</h1>
+            <div class="padre">
+              <h2>Componente padre</h2>
+              <p>{{ text }}</p>
+              <componente-hijo />
             </div>
         `,
       });
 
-      app.component("v-input", {
-        props: {
-          valor_input: String,
-        },
-        methods: {
-          cambiar_input_hijo(e) {
-            console.log("hijo", e.target.value);
-            this.$emit("evento_padre", e.target.value);
+      app.component("componente-hijo", {
+        template: `
+            <div class="hijo">
+              <h2>Componente hijo</h2>
+              <componente-nieto />
+            </div>
+        `,
+      });
+
+      app.component("componente-nieto", {
+        // inject: ["texto_enviado_a_nieto"],
+        inject: {
+          text_nieto: {
+            from: "texto_enviado_a_nieto",
           },
         },
-        template: `<input type="text" v-bind:value="valor_input" v-on:input="cambiar_input_hijo" />`,
+        template: `
+            <div class="nieto">
+              <h2>Componente nieto</h2>
+              <p>{{ text_nieto }}</p>
+            </div>
+        `,
       });
 
       const vm = app.mount("#app");
     </script>
 
-    <div id="app2"></div>
+    <style>
+      .padre {
+        border: 1px solid black;
+        padding: 20px;
+        background-color: aqua;
+      }
 
-    <script>
-      const app2 = Vue.createApp({
-        data() {
-          return {
-            text: "EJEMPLO CON v-model",
-          };
-        },
-        template: `
-            <div>
-                <h2>{{ text }}</h2>
-                <v-input v-model:valor_input="text" />
-            </div>
-        `,
-      });
+      .hijo {
+        border: 1px solid black;
+        padding: 20px;
+        background-color: rgb(96, 96, 207);
+      }
 
-      app2.component("v-input", {
-        props: {
-          valor_input: String,
-        },
-        methods: {
-          cambiar_input_hijo(e) {
-            console.log("hijo", e.target.value);
-            this.$emit("update:valor_input", e.target.value);
-          },
-        },
-        template: `<input type="text" v-bind:value="valor_input" v-on:input="cambiar_input_hijo" />`,
-      });
-
-      const vm2 = app2.mount("#app2");
-    </script>
+      .nieto {
+        border: 1px solid black;
+        padding: 20px;
+        background-color: aquamarine;
+      }
+    </style>
   </body>
 </html>
