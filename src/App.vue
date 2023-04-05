@@ -3,6 +3,20 @@ import HelloWorld from "./components/HelloWorld.vue";
 import TheWelcome from "./components/TheWelcome.vue";
 </script>
 
+<script>
+export default {
+  name: "App",
+  components: {
+    HelloWorld,
+  },
+  data() {
+    return {
+      componente_dinamico: "HelloWorld",
+    };
+  },
+};
+</script>
+
 <template>
   <header>
     <img
@@ -14,7 +28,18 @@ import TheWelcome from "./components/TheWelcome.vue";
     />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      // componente dinámico con sus props
+      <component
+        :is="componente_dinamico"
+        v-bind="{ msg: 'Hola Vue' }"
+      ></component>
+
+      // otro ejemplo
+      <component
+        :is="HelloWorld"
+        msg="mensaje de prueba"
+        titlecustom="This a fucking vuejs"
+      ></component>
     </div>
   </header>
 
