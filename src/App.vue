@@ -1,20 +1,12 @@
 <script setup>
-import HelloWorld from "./components/HelloWorld.vue";
+import { defineAsyncComponent } from "vue";
 import TheWelcome from "./components/TheWelcome.vue";
 </script>
 
 <script>
-export default {
-  name: "App",
-  components: {
-    HelloWorld,
-  },
-  data() {
-    return {
-      componente_dinamico: "HelloWorld",
-    };
-  },
-};
+const HelloWorld = defineAsyncComponent(() =>
+  import("./components/HelloWorld.vue")
+);
 </script>
 
 <template>
@@ -28,18 +20,7 @@ export default {
     />
 
     <div class="wrapper">
-      // componente dinámico con sus props
-      <component
-        :is="componente_dinamico"
-        v-bind="{ msg: 'Hola Vue' }"
-      ></component>
-
-      // otro ejemplo
-      <component
-        :is="HelloWorld"
-        msg="mensaje de prueba"
-        titlecustom="This a fucking vuejs"
-      ></component>
+      <HelloWorld msg="Conseguidoooo!" />
     </div>
   </header>
 
