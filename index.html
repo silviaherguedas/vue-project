@@ -6,35 +6,10 @@
     <meta name="robots" content="index,follow" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Instancias de componentes</title>
+    <title>Vite App</title>
   </head>
   <body>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-
     <div id="app"></div>
-
-    <script>
-      const app = Vue.createApp({
-        data() {
-          return {
-            text: "Hola Vue",
-          };
-        },
-        template: `<v-button ref="elemento" :label="text"></v-button>`,
-      });
-
-      app.component("v-button", {
-        props: ["label"],
-        template: `<button>{{ label }}</button>`,
-      });
-
-      const vm = app.mount("#app");
-
-      console.log("root:", vm.$root);
-      console.log("el: ", vm.$el);
-      console.log("refs: ", vm.$refs);
-      console.log("refs.elemento: ", vm.$refs.elemento);
-      console.log("props: ", vm.$props);
-    </script>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>
