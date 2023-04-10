@@ -1,34 +1,29 @@
 <script setup>
-import Menu from "./components/Menu.vue";
+import Modal from "./components/Modal.vue";
 </script>
 
 <script>
 export default {
   name: "App",
-  // components: { Menu },
-  data() {
-    return {
-      show: false,
-    };
+  components: {
+    Modal,
   },
 };
 </script>
 
 <template>
-  <button @click="show = !show">Menu</button>
-  <transition name="fade">
-    <Menu v-show="show"></Menu>
-  </transition>
+  <div>
+    <Modal />
+  </div>
 </template>
 
 <style scoped>
-.fade-leave-to,
-.fade-enter-to {
-  opacity: 0;
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s ease;
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
 }
 </style>
