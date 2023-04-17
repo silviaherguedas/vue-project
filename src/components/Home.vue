@@ -1,17 +1,25 @@
 <script setup>
-import onMounted from "vue";
+import { ref } from "vue";
 </script>
 
 <script>
 export default {
   setup() {
-    onMounted(() => {
-      console.log("mounted!");
-    });
+    const text = ref("hola Vue");
+    console.log(text.value);
+
+    const count = ref(0);
+    setInterval(() => count.value++, 500);
+
+    return {
+      text,
+      count,
+    };
   },
 };
 </script>
 
 <template>
-  <div>Hola</div>
+  <div>{{ text }}</div>
+  <div>Contador: {{ count }}</div>
 </template>
