@@ -10,10 +10,13 @@ export default {
       type: String,
       required: true,
     },
+    repositories: {
+      type: Number,
+      default: 100,
+    },
   },
   data() {
     return {
-      repositories: [], // 1
       filters: {}, // 3
       searchQuery: "", // 2
     };
@@ -21,7 +24,8 @@ export default {
   setup(props, ctx) {
     console.log("props", props);
     console.log("ctx", ctx);
-    const total = `Total`;
+
+    const total = `Total ${props.repositories}`;
     return {
       total,
     };
