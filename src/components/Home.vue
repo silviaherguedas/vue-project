@@ -1,8 +1,5 @@
-<script setup>
-import { reactive } from "vue";
-</script>
-
 <script>
+import { reactive } from "vue";
 export default {
   setup() {
     const obj = reactive({ counter: 0 });
