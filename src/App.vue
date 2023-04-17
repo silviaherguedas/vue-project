@@ -1,8 +1,11 @@
-<script setup></script>
+<script setup>
+import base from "@/mixins/base";
+</script>
 
 <script>
 export default {
   name: "App",
+  mixins: [base],
   data() {
     return {
       text: "Hola Vue",
@@ -23,6 +26,9 @@ export default {
 <template>
   <div>
     {{ text }}
+  </div>
+  <div>
+    {{ algo }}
   </div>
 </template>
 
