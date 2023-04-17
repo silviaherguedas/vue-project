@@ -1,18 +1,18 @@
 <script setup>
-import UserRepositories from "./components/UserRepositories.vue";
+import Home from "./components/Home.vue";
 </script>
 
 <script>
 export default {
   name: "App",
   components: {
-    UserRepositories,
+    Home,
   },
 };
 </script>
 
 <template>
-  <UserRepositories :user="'Diana'"></UserRepositories>
+  <Home></Home>
 </template>
 
 <style scoped>
