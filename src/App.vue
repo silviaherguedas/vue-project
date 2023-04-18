@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-  <Home></Home>
+  <Home first-name="Silvia" last-name="Herguedas"></Home>
 </template>
 
 <style scoped>
