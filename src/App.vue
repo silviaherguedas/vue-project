@@ -12,7 +12,11 @@ export default {
 </script>
 
 <template>
-  <Home first-name="Silvia" last-name="Herguedas"></Home>
+  <Home
+    first-name="Silvia"
+    last-name="Herguedas"
+    otro-attr="valor del atributo OTRO"
+  ></Home>
 </template>
 
 <style scoped>

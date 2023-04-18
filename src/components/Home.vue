@@ -1,23 +1,42 @@
 <template>
-  {{ fullName }}
+  <div>{{ fullName }}</div>
 </template>
 
-<script setup>
-import { computed, toRefs, watch } from "vue";
+<!-- <script setup>
+import { useAttrs } from "vue";
 
-const props = defineProps({
-  firstName: String,
-  lastName: String,
-});
+const attrs = useAttrs();
+console.log(attrs);
 
-const { firstName, lastName } = toRefs(props);
+</script> -->
 
-const fullName = computed(() => {
-  return `${firstName.value} ${lastName.value}`;
-});
+<script>
+import { toRefs, computed } from "vue";
 
-watch(firstName, (newValue, oldValue) => {
-  console.log(`The new name is ${newValue}`);
-  console.log(`The old name is ${oldValue}`);
-});
+export default {
+  props: {
+    firstName: String,
+    lastName: String,
+  },
+  setup(props, { attrs, slots, emit, expose }) {
+    console.log(attrs);
+    console.log(slots);
+    console.log(emit);
+    console.log(expose);
+
+    const { firstName, lastName } = toRefs(props);
+
+    const fullName = computed(() => {
+      return `${firstName.value} ${lastName.value}`;
+    });
+
+    expose({
+      fullName,
+    });
+
+    return {
+      fullName,
+    };
+  },
+};
 </script>
