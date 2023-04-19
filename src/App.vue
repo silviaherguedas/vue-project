@@ -1,27 +1,15 @@
 <script setup>
 import Home from "./components/Home.vue";
-</script>
+import { provide, reactive } from "vue";
 
-<script>
-export default {
-  name: "App",
-  components: {
-    Home,
-  },
-};
+const persona = reactive({
+  firstName: "Pepe",
+  lastName: "Argento",
+});
+
+provide("objPerson", persona);
 </script>
 
 <template>
-  <Home first-name="Silvia" last-name="Herguedas"></Home>
+  <Home />
 </template>
-
-<style scoped>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
