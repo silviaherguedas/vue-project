@@ -1,6 +1,5 @@
 <script setup>
 import Home from "./components/Home.vue";
-import { ref, provide } from "vue";
 </script>
 
 <script>
@@ -8,10 +7,6 @@ export default {
   name: "App",
   components: {
     Home,
-  },
-  setup() {
-    const username = ref("DianaNerd");
-    provide("username", username);
   },
 };
 </script>

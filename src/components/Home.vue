@@ -1,10 +1,10 @@
 <template>
   <div>{{ fullName }}</div>
-  <div>{{ username }}</div>
+  <button ref="btn">click!</button>
 </template>
 
 <script>
-import { toRefs, computed, inject } from "vue";
+import { ref, toRefs, computed, inject, watch } from "vue";
 
 export default {
   props: {
@@ -18,15 +18,20 @@ export default {
       return `${firstName.value} ${lastName.value}`;
     });
 
-    const username = inject("username");
+    const btn = ref(null);
+    console.log(btn.value); //* null
 
     expose({
       fullName,
     });
 
+    watch(btn, (value) => {
+      console.log(value); //* html
+    });
+
     return {
       fullName,
-      username,
+      btn,
     };
   },
 };
